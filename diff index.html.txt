@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NAMA BRAND - Website Usaha</title>
+<meta name="description" content="Website usaha NAMA BRAND: produk, galeri, dan kontak WhatsApp." />
+
+<style>
+:root{
+--bg:#0b1220; --card:#111b2e; --text:#e9eefc; --muted:#a9b5d6;
+--brand:#25D366; --accent:#7c5cff; --stroke:rgba(255,255,255,.10);
+--shadow:0 10px 30px rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+background:
+radial-gradient(900px 420px at 10% 0%, #14244a 0%, transparent 55%),
+radial-gradient(900px 420px at 90% 0%, #24144a 0%, transparent 55%),
+linear-gradient(120deg,#0b1220,#0f1a33);
+color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;position:sticky;top:0;background:rgba(11,18,32,.65);backdrop-filter:blur(10px);z-index:50}
+.logo{font-weight:900;letter-spacing:.4px}
+.menu{display:flex;gap:16px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.btn{
+border:1px solid var(--stroke);
+padding:10px 14px;border-radius:12px;
+background:rgba(255,255,255,.06);
+color:var(--text);font-weight:800;cursor:pointer;
+transition:transform .08s ease, background .2s ease, filter .2s ease;
+display:inline-flex;align-items:center;gap:8px;
+}
+.btn:hover{background:rgba(255,255,255,.10)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);border-color:transparent}
+.btn-primary:hover{filter:brightness(.95)}
+.btn-wa{background:var(--brand);border-color:transparent;color:#053014}
+.btn-wa:hover{filter:brightness(.95)}
+
+.card{
+background:rgba(17,27,46,.78);
+border:1px solid var(--stroke);
+border-radius:18px;
+padding:18px;
+backdrop-filter: blur(10px);
+box-shadow:var(--shadow);
+}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;align-items:stretch;margin-top:14px}
+h1{font-size:40px;line-height:1.08;margin:0 0 10px}
+h2{margin:0 0 10px}
+p{margin:0 0 14px;color:var(--muted);line-height:1.55}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.badge{
+font-size:12px;color:var(--muted);
+border:1px solid var(--stroke);
+padding:6px 10px;border-radius:999px;
+background:rgba(255,255,255,.04);
+}
+
+.section{margin-top:14px}
+.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 0 10px}
+.sectionHead small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{padding:14px}
+.tile h3{margin:0 0 6px;font-size:16px}
+.tile p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+
+/* Produk */
+.productCard{padding:0;overflow:hidden}
+.productImg{
+width:100%;height:180px;object-fit:cover;display:block;
+background:rgba(255,255,255,.06)
+}
+.productBody{padding:14px}
+.price{font-size:18px;font-weight:900;margin:6px 0 10px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+font-size:12px;color:var(--muted);
+border:1px solid var(--stroke);
+padding:6px 10px;border-radius:999px;
+background:rgba(255,255,255,.04);
+}
+.toolbar{
+display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+padding:12px;border-radius:16px;border:1px solid var(--stroke);
+background:rgba(255,255,255,.04)
+}
+input, select, textarea{
+width:100%;padding:10px 12px;border-radius:12px;
+border:1px solid var(--stroke);background:#0c1426;color:var(--text);
+outline:none;
+}
+.searchWrap{flex:1;min-width:220px}
+.filterWrap{width:220px;max-width:100%}
+
+/* Gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.gItem{
+border-radius:16px;overflow:hidden;border:1px solid var(--stroke);
+background:rgba(255,255,255,.04);cursor:pointer;
+}
+.gItem img{width:100%;height:160px;object-fit:cover;display:block}
+.lightbox{
+position:fixed;inset:0;background:rgba(0,0,0,.72);
+display:none;align-items:center;justify-content:center;z-index:2000;
+padding:18px;
+}
+.lightboxContent{
+max-width:980px;width:100%;
+border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.16);
+background:#0b1220;
+}
+.lightboxContent img{width:100%;max-height:78vh;object-fit:contain;display:block;background:#000}
+.lightboxBar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px}
+.lightboxBar span{color:var(--muted);font-size:13px}
+.xBtn{background:rgba(255,255,255,.08);border:1px solid var(--stroke);color:var(--text);border-radius:12px;padding:8px 10px;cursor:pointer}
+
+/* WA floating + quick menu */
+.wa-float{
+position:fixed;right:18px;bottom:18px;z-index:9999;
+display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+}
+.wa-quick{
+display:none;
+width:280px;
+border:1px solid var(--stroke);
+background:rgba(12,20,38,.92);
+backdrop-filter: blur(10px);
+border-radius:16px;
+box-shadow:0 12px 30px rgba(0,0,0,.30);
+overflow:hidden;
+}
+.wa-quick header{
+padding:12px 12px 10px;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+.wa-quick header b{display:block}
+.wa-quick header small{color:var(--muted)}
+.wa-quick .list{padding:10px;display:grid;gap:8px}
+.wa-quick .list button{
+width:100%;
+text-align:left;
+border:1px solid rgba(255,255,255,.10);
+background:rgba(255,255,255,.06);
+color:var(--text);
+padding:10px 12px;border-radius:12px;
+cursor:pointer;font-weight:800;
+display:flex;justify-content:space-between;align-items:center;
+}
+.wa-quick .list button:hover{background:rgba(255,255,255,.10)}
+.wa-mainBtn{
+width:56px;height:56px;border-radius:16px;background:var(--brand);
+display:grid;place-items:center;border:0;cursor:pointer;
+box-shadow:0 12px 30px rgba(0,0,0,.32);
+}
+.wa-mainBtn:active{transform:translateY(1px)}
+.wa-mainBtn svg{width:28px;height:28px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+background:#0c1426;border:1px solid rgba(255,255,255,.14);
+padding:10px 12px;border-radius:12px;color:var(--text);display:none;z-index:99999}
+
+.footer{margin:24px 0 10px;color:var(--muted);font-size:13px;text-align:center}
+
+@media (max-width:980px){
+.hero{grid-template-columns:1fr}
+.grid{grid-template-columns:1fr}
+.gallery{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav">
+<div class="logo">🏷️ NAMA BRAND</div>
+<div class="menu">
+<a href="#layanan">Layanan</a>
+<a href="#produk">Produk</a>
+<a href="#gallery">Gallery</a>
+<a href="#kontak">Kontak</a>
+</div>
+<a class="btn btn-primary" href="#produk">Lihat Produk</a>
+</div>
+
+<section class="hero">
+<div class="card">
+<h1>Website usaha siap pakai</h1>
+<p>
+Landing page + halaman produk + gallery foto + WhatsApp dengan pilihan pesan.
+Tinggal ganti konten sesuai usahamu.
+</p>
+<div class="row">
+<a class="btn btn-wa" id="waHero" href="#" target="_blank" rel="noopener">Chat WhatsApp</a>
+<a class="btn" href="#gallery">Lihat Gallery</a>
+</div>
+<div class="badges">
+<span class="badge">✅ Respon cepat</span>
+<span class="badge">✅ Bisa tanya stok</span>
+<span class="badge">✅ Produk & foto</span>
+</div>
+</div>
+
+<div class="card">
+<h2>Info cepat</h2>
+<div class="row">
+<span class="chip">Jam: 08:00–21:00</span>
+<span class="chip">Area: Kota/Kab</span>
+<span class="chip">Pengiriman: Opsional</span>
+</div>
+<p style="margin-top:10px">
+Tambahkan info pembayaran, ongkir, atau promo di sini.
+</p>
+<a class="btn btn-wa" id="waStockGeneral" href="#" target="_blank" rel="noopener">Tanya stok (umum)</a>
+</div>
+</section>
+
+<section id="layanan" class="section">
+<div class="sectionHead">
+<div>
+<h2>Layanan</h2>
+<small>Ubah sesuai kebutuhan usahamu</small>
+</div>
+</div>
+<div class="grid">
+<div class="card tile">
+<h3>🧰 Layanan 1</h3><p>Jelaskan layanan/produk utama kamu.</p>
+</div>
+<div class="card tile">
+<h3>📦 Layanan 2</h3><p>Tambahkan benefit/hasil yang didapat.</p>
+</div>
+<div class="card tile">
+<h3>✨ Layanan 3</h3><p>Masukkan varian layanan/paket.</p>
+</div>
+</div>
+</section>
+
+<section id="produk" class="section">
+<div class="sectionHead">
+<div>
+<h2>Produk</h2>
+<small>Pilih kategori, cari nama produk, dan klik “Tanya stok”</small>
+</div>
+</div>
+
+<div class="toolbar">
+<div class="searchWrap">
+<input id="search" placeholder="Cari produk… (contoh: hoodie, parfum, aksesoris)" />
+</div>
+<div class="filterWrap">
+<select id="category">
+<option value="all">Semua kategori</option>
+</select>
+</div>
+</div>
+
+<div id="productGrid" class="grid" style="margin-top:12px;"></div>
+</section>
+
+<section id="gallery" class="section">
+<div class="sectionHead">
+<div>
+<h2>Gallery Foto</h2>
+<small>Klik foto untuk melihat besar</small>
+</div>
+</div>
+
+<div id="galleryGrid" class="gallery"></div>
+</section>
+
+<section id="kontak" class="section">
+<div class="card">
+<h2>Kontak</h2>
+<p>Isi form untuk membuat pesan WhatsApp otomatis.</p>
+
+<form id="waForm">
+<div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+<div>
+<label>Nama</label>
+<input id="nama" placeholder="Nama kamu" required />
+</div>
+<div>
+<label>Kebutuhan</label>
+<input id="kebutuhan" placeholder="Contoh: Tanya stok produk A" required />
+</div>
+</div>
+<div style="margin-top:10px;">
+<label>Pesan</label>
+<textarea id="pesan" placeholder="Tulis detail..." required></textarea>
+</div>
+<div class="row" style="margin-top:12px;">
+<button class="btn btn-wa" type="submit">Kirim ke WhatsApp</button>
+<button class="btn" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">Ke atas</button>
+</div>
+</form>
+</div>
+</section>
+
+<div class="footer">© <span id="year"></span> NAMA BRAND • All rights reserved</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+<div class="lightboxContent">
+<div class="lightboxBar">
+<span id="lightboxCaption">Foto</span>
+<button class="xBtn" id="closeLb">Tutup</button>
+</div>
+<img id="lightboxImg" alt="preview" />
+</div>
+</div>
+
+<!-- WhatsApp Floating with choices -->
+<div class="wa-float">
+<div class="wa-quick" id="waQuick">
+<header>
+<b>Chat WhatsApp</b>
+<small>Pilih pesan cepat</small>
+</header>
+<div class="list">
+<button type="button" data-wa="tanya-harga">
+Tanya harga <span>›</span>
+</button>
+<button type="button" data-wa="tanya-stok">
+Tanya stok <span>›</span>
+</button>
+<button type="button" data-wa="cara-order">
+Cara order <span>›</span>
+</button>
+<button type="button" data-wa="konsultasi">
+Konsultasi <span>›</span>
+</button>
+</div>
+</div>
+
+<button class="wa-mainBtn" id="waMainBtn" aria-label="WhatsApp Menu">
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M16 3C8.82 3 3 8.67 3 15.66c0 2.45.7 4.73 1.92 6.69L4 29l6.78-1.77A13.2 13.2 0 0 0 16 28.3c7.18 0 13-5.67 13-12.64C29 8.67 23.18 3 16 3z" fill="#053014" opacity=".12"/>
+<path d="M16 5.2c-5.96 0-10.8 4.68-10.8 10.46 0 2.23.72 4.3 1.96 6.01l-1.05 3.9 4.02-1.04A10.97 10.97 0 0 0 16 26.12c5.96 0 10.8-4.68 10.8-10.46C26.8 9.88 21.96 5.2 16 5.2z" fill="#053014" opacity=".18"/>
+<path d="M12.9 10.7c-.18-.4-.37-.41-.55-.42h-.48c-.16 0-.42.06-.65.3-.22.23-.85.83-.85 2.03s.87 2.36.99 2.52c.12.16 1.68 2.65 4.17 3.61 2.07.79 2.49.63 2.94.59.45-.05 1.44-.58 1.64-1.14.2-.56.2-1.03.14-1.14-.06-.11-.22-.17-.47-.3-.24-.12-1.44-.7-1.66-.78-.22-.08-.38-.12-.55.12-.16.23-.63.78-.77.94-.14.16-.28.18-.53.06-.24-.12-1.02-.37-1.94-1.19-.72-.63-1.2-1.4-1.34-1.64-.14-.23-.01-.36.11-.48.1-.1.24-.28.36-.42.12-.14.16-.23.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.36-.76-1.86z" fill="#ffffff"/>
+</svg>
+</button>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// =========================
+// WA SETTINGS (WAJIB UBAH)
+// =========================
+// Format: kode negara + nomor tanpa 0/spasi. Contoh: 6281234567890
+const WA_NUMBER = "6281234567890"; // <-- GANTI NOMOR WA KAMU
+const BRAND_NAME = "NAMA BRAND"; // <-- GANTI NAMA BRAND KAMU (opsional)
+
+function waLink(text){
+const msg = encodeURIComponent(text);
+return `https://wa.me/${WA_NUMBER}?text=${msg}`;
+}
+
+// Quick messages
+const quickMessages = {
+"tanya-harga": `Halo ${BRAND_NAME}, saya mau tanya harga produk.`,
+"tanya-stok": `Halo ${BRAND_NAME}, saya mau tanya stok produk (nama produk: ...). Apakah masih tersedia?`,
+"cara-order": `Halo ${BRAND_NAME}, bagaimana cara order dan pengirimannya?`,
+"konsultasi": `Halo ${BRAND_NAME}, saya mau konsultasi terlebih dulu.`
+};
+
+// Tombol WA umum
+document.getElementById("waHero").href = waLink(`Halo ${BRAND_NAME}, saya mau tanya produk/layanan.`);
+document.getElementById("waStockGeneral").href = waLink(quickMessages["tanya-stok"]);
+
+// Floating menu toggle
+const waQuick = document.getElementById("waQuick");
+document.getElementById("waMainBtn").addEventListener("click", () => {
+waQuick.style.display = (waQuick.style.display === "block") ? "none" : "block";
+});
+
+// Floating quick buttons action
+waQuick.addEventListener("click", (e) => {
+const btn = e.target.closest("button[data-wa]");
+if(!btn) return;
+const key = btn.getAttribute("data-wa");
+window.open(waLink(quickMessages[key] || `Halo ${BRAND_NAME}`), "_blank", "noopener");
+waQuick.style.display = "none";
+});
+
+// Click outside -> close quick menu
+document.addEventListener("click", (e) => {
+const inFloat = e.target.closest(".wa-float");
+if(!inFloat) waQuick.style.display = "none";
+});
+
+// =========================
+// PRODUK DATA (UBAH SESUKA)
+// =========================
+const products = [
+{
+id: "p1",
+name: "Produk A",
+category: "Kategori 1",
+price: "Rp 99.000",
+desc: "Deskripsi singkat produk A.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+},
+{
+id: "p2",
+name: "Produk B",
+category: "Kategori 1",
+price: "Rp 129.000",
+desc: "Deskripsi singkat produk B.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+},
+{
+id: "p3",
+name: "Produk C",
+category: "Kategori 2",
+price: "Rp 59.000",
+desc: "Deskripsi singkat produk C.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+},
+{
+id: "p4",
+name: "Produk D",
+category: "Kategori 2",
+price: "Rp 199.000",
+desc: "Deskripsi singkat produk D.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+},
+{
+id: "p5",
+name: "Produk E",
+category: "Kategori 3",
+price: "Rp 79.000",
+desc: "Deskripsi singkat produk E.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+},
+{
+id: "p6",
+name: "Produk F",
+category: "Kategori 3",
+price: "Rp 149.000",
+desc: "Deskripsi singkat produk F.",
+img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1200&q=70"
+}
+];
+
+// =========================
+// GALLERY DATA (UBAH SESUKA)
+// =========================
+const gallery = [
+{ caption: "Foto 1", url: "https://images.unsplash.com/photo-1520975693411-6f07fd810a99?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 2", url: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 3", url: "https://images.unsplash.com/photo-1520975958225-6d1a12a9b73a?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 4", url: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 5", url: "https://images.unsplash.com/photo-1520975759934-8b6d0bb8d65f?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 6", url: "https://images.unsplash.com/photo-1520975916759-79e4e0fdb54b?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 7", url: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1400&q=70" },
+{ caption: "Foto 8", url: "https://images.unsplash.com/photo-1520975863281-47a7f6d0e6f8?auto=format&fit=crop&w=1400&q=70" }
+];
+
+// =========================
+// RENDER & FILTER PRODUK
+// =========================
+const productGrid = document.getElementById("productGrid");
+const searchInput = document.getElementById("search");
+const categorySelect = document.getElementById("category");
+
+function uniq(arr){ return [...new Set(arr)]; }
+
+function initCategories(){
+const cats = uniq(products.map(p => p.category));
+cats.forEach(c => {
+const opt = document.createElement("option");
+opt.value = c;
+opt.textContent = c;
+categorySelect.appendChild(opt);
+});
+}
+
+function productCard(p){
+const textStock = `Halo ${BRAND_NAME}, saya mau tanya stok:
+Nama produk: ${p.name}
+Kategori: ${p.category}
+Apakah masih tersedia?`;
+
+const textHarga = `Halo ${BRAND_NAME}, saya mau tanya harga:
+Nama produk: ${p.name}`;
+
+return `
+<div class="card productCard">
+<img class="productImg" src="${p.img}" alt="${p.name}" loading="lazy"/>
+<div class="productBody">
+<div class="row" style="justify-content:space-between;align-items:start">
+<div>
+<h3 style="margin:0 0 6px">${p.name}</h3>
+<div class="chip">${p.category}</div>
+</div>
+<div class="price">${p.price}</div>
+</div>
+<p style="margin:10px 0 12px">${p.desc}</p>
+<div class="row">
+<a class="btn btn-wa" href="${waLink(textStock)}" target="_blank" rel="noopener">Tanya stok</a>
+<a class="btn" href="${waLink(textHarga)}" target="_blank" rel="noopener">Tanya harga</a>
+</div>
+</div>
+</div>
+`;
+}
+
+function renderProducts(){
+const q = (searchInput.value || "").toLowerCase().trim();
+const cat = categorySelect.value;
+
+const filtered = products.filter(p => {
+const matchQ = !q || (p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+const matchCat = (cat === "all") || (p.category === cat);
+return matchQ && matchCat;
+});
+
+productGrid.innerHTML = filtered.map(productCard).join("");
+
+if(filtered.length === 0){
+productGrid.innerHTML = `<div class="card" style="grid-column:1/-1">
+<b>Produk tidak ditemukan.</b>
+<p style="margin:6px 0 0">Coba kata kunci lain atau pilih kategori “Semua”.</p>
+</div>`;
+}
+}
+
+initCategories();
+renderProducts();
+searchInput.addEventListener("input", renderProducts);
+categorySelect.addEventListener("change", renderProducts);
+
+// =========================
+// RENDER GALLERY + LIGHTBOX
+// =========================
+const galleryGrid = document.getElementById("galleryGrid");
+const lightbox = document.getElementById("lightbox");
+const lbImg = document.getElementById("lightboxImg");
+const lbCap = document.getElementById("lightboxCaption");
+const closeLb = document.getElementById("closeLb");
+
+function renderGallery(){
+galleryGrid.innerHTML = gallery.map((g, idx) => `
+<div class="gItem" data-idx="${idx}">
+<img src="${g.url}" alt="${g.caption}" loading="lazy"/>
+</div>
+`).join("");
+}
+
+function openLightbox(idx){
+const g = gallery[idx];
+lbImg.src = g.url;
+lbCap.textContent = g.caption;
+lightbox.style.display = "flex";
+}
+
+function closeLightbox(){
+lightbox.style.display = "none";
+lbImg.src = "";
+}
+
+renderGallery();
+galleryGrid.addEventListener("click", (e) => {
+const item = e.target.closest(".gItem");
+if(!item) return;
+openLightbox(Number(item.getAttribute("data-idx")));
+});
+closeLb.addEventListener("click", closeLightbox);
+lightbox.addEventListener("click", (e) => { if(e.target === lightbox) closeLightbox(); });
+document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeLightbox(); });
+
+// =========================
+// FORM -> KIRIM WA
+// =========================
+document.getElementById("waForm").addEventListener("submit", (e) => {
+e.preventDefault();
+const nama = document.getElementById("nama").value.trim();
+const kebutuhan = document.getElementById("kebutuhan").value.trim();
+const pesan = document.getElementById("pesan").value.trim();
+
+const text =
+`Halo ${BRAND_NAME}, saya ${nama}.
+Kebutuhan: ${kebutuhan}
+Detail: ${pesan}`;
+
+window.open(waLink(text), "_blank", "noopener");
+});
+</script>
+</body>
+</html>
