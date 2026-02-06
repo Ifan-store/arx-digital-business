@@ -750,8 +750,11 @@ Nama produk: ${p.name}
 Kategori: ${p.category}
 Apakah masih tersedia?`;
 
-const textHarga = `Halo ${BRAND_NAME}, saya mau tanya harga:
-Nama produk: ${p.name}`;
+const textHarga = `Halo ${BRAND_NAME}, saya mau BELI sekarang.
+Produk: ${p.name}
+Kategori: ${p.category}
+Mohon info pembayaran.`;
+
 
 return `
 <div class="card productCard">
@@ -767,7 +770,7 @@ return `
 <p style="margin:10px 0 12px">${p.desc}</p>
 <div class="row">
 <a class="btn btn-wa" href="${waLink(textStock)}" target="_blank" rel="noopener">Tanya stok</a>
-<a class="btn" href="${waLink(textHarga)}" target="_blank" rel="noopener">Tanya harga</a>
+<a class="btn" href="${waLink(textHarga)}" target="_blank" rel="noopener">BELI SEKARANG</a>
 </div>
 </div>
 </div>
@@ -857,6 +860,7 @@ window.open(waLink(text), "_blank", "noopener");
 </script>
 </body>
 </html>
+
 
 
 
